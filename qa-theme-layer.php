@@ -108,12 +108,12 @@ class qa_html_theme_layer extends qa_html_theme_base {
 
 					'buttons' => array(
 						array(
-							'label' => qa_lang_html('admin/reset_options_button'),
-							'tags' => 'NAME="theme_switch_user_reset"',
-						     ),
-						array(
 							'label' => qa_lang_html('main/save_button'),
 							'tags' => 'NAME="theme_switch_save"',
+						     ),
+						array(
+							'label' => qa_lang_html('admin/reset_options_button'),
+							'tags' => 'NAME="theme_switch_user_reset"',
 						     ),
 						),
 					);
