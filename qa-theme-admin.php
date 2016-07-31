@@ -8,9 +8,9 @@ class qa_theme_admin {
 				return 'Theme';
 			case 'theme_switch_text':
 				return 'Choose theme:';
-			case 'theme_mobile_switch_title':
+			case 'theme_switch_mobile_title':
 				return 'Mobile Theme';
-			case 'theme_mobile_switch_text':
+			case 'theme_switch_mobile_text':
 				return 'Choose mobile theme:';
 			default:
 				return null;				
@@ -31,27 +31,23 @@ class qa_theme_admin {
 		$ok = null;
 
 		if (qa_clicked('theme_switch_save')) {
+			 foreach($_POST as $i => $v) {
 
-			qa_db_query_sub(
-					'CREATE TABLE IF NOT EXISTS ^usermeta (
-						meta_id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-						user_id bigint(20) unsigned NOT NULL,
-						meta_key varchar(255) DEFAULT NULL,
-						meta_value longtext,
-						PRIMARY KEY (meta_id),
-						UNIQUE (user_id,meta_key)
-						) ENGINE=MyISAM  DEFAULT CHARSET=utf8'
-				       );		
+                                qa_opt($i,$v);
+                        }
 
-			qa_opt('theme_switch_enable',(bool)qa_post_text('theme_switch_enable'));
-			qa_opt('theme_switch_title',qa_post_text('theme_switch_title'));
-			qa_opt('theme_switch_text',qa_post_text('theme_switch_text'));
-			qa_opt('theme_switch_mobile_title',qa_post_text('theme_switch_mobile_title'));
-			qa_opt('theme_switch_mobile_text',qa_post_text('theme_switch_mobile_text'));
-			qa_opt('theme_switch_enable_mobile',(bool)qa_post_text('theme_switch_enable_mobile'));
-			global $qa_request;
-			qa_redirect($qa_request,array('ok'=>qa_lang_html('admin/options_saved')));
+                        $ok = qa_lang('admin/options_saved');
+
+
 		}
+		else if (qa_clicked('theme_switch_reset')) {
+                        foreach($_POST as $i => $v) {
+                                $def = $this->option_default($i);
+                                if($def !== null) qa_opt($i,$def);
+                        }
+                        $ok = qa_lang('admin/options_reset');
+                }
+
 
 
 		// Create the form for display
@@ -94,14 +90,14 @@ class qa_theme_admin {
 		$fields[] = array(
 				'label' => 'Mobile Theme switch title',
 				'type' => 'text',
-				'value' => qa_html(qa_opt('theme_mobile_switch_title')),
-				'tags' => 'NAME="theme_mobile_switch_title"',
+				'value' => qa_html(qa_opt('theme_switch_mobile_title')),
+				'tags' => 'NAME="theme_switch_mobile_title"',
 				);		   
 		$fields[] = array(
 				'label' => 'Mobile Theme switch text',
 				'type' => 'text',
 				'value' => qa_html(qa_opt('theme_mobile_switch_text')),
-				'tags' => 'NAME="theme_mobile_switch_text"',
+				'tags' => 'NAME="theme_switch_mobile_text"',
 				);		   
 
 
@@ -109,13 +105,16 @@ class qa_theme_admin {
 				'ok' => ($ok && !isset($error)) ? $ok : null,
 
 				'fields' => $fields,
-
 				'buttons' => array(
-					array(
-						'label' => 'Save',
-						'tags' => 'NAME="theme_switch_save"',
-					     )
-					),
+                                        array(
+                                                'label' => qa_lang_html('main/save_button'),
+                                                'tags' => 'NAME="theme_switch_save"',
+                                             ),
+                                        array(
+                                                'label' => qa_lang_html('admin/reset_options_button'),
+                                                'tags' => 'NAME="theme_switch_reset"',
+                                             ),
+                                        )
 			    );
 	}
 }
