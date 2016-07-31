@@ -33,12 +33,12 @@ class qa_html_theme_layer extends qa_html_theme_base {
 			$userid = qa_get_logged_in_userid();
 			if (qa_clicked('theme_switch_save')) {
 				qa_db_query_sub(
-						'INSERT INTO ^usermetas (userid,title,content) VALUES (#,$,$) ON DUPLICATE KEY UPDATE value=$',
+						'INSERT INTO ^usermetas (userid,title,content) VALUES (#,$,$) ON DUPLICATE KEY UPDATE content=$',
 						$userid,'custom_theme',qa_post_text('theme_choice'),qa_post_text('theme_choice')
 					       );
 				if (qa_opt('theme_switch_enable_mobile')) {
 					qa_db_query_sub(
-							'INSERT INTO ^usermetas (userid,title,content) VALUES (#,$,$) ON DUPLICATE KEY UPDATE value=$',
+							'INSERT INTO ^usermetas (userid,title,content) VALUES (#,$,$) ON DUPLICATE KEY UPDATE content=$',
 							$userid,'custom_theme_mobile',qa_post_text('theme_mobile_choice'),qa_post_text('theme_mobile_choice')
 						       ); 
 				}
