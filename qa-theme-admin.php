@@ -112,7 +112,7 @@ class qa_theme_admin {
 		$fields[] = array(
 				'label' => 'Mobile Theme switch text',
 				'type' => 'text',
-				'value' => qa_html(qa_opt('theme_mobile_switch_text')),
+				'value' => qa_html(qa_opt('theme_switch_mobile_text')),
 				'tags' => 'NAME="theme_switch_mobile_text"',
 				);		   
 
