@@ -137,14 +137,6 @@ class qa_theme_admin {
 					)
 			    );
 	}
-	var $directory;
-	var $urltoroot;
-
-	function load_module($directory, $urltoroot) {
-		$this->directory=$directory;
-		$this->urltoroot=$urltoroot;
-	}
-
 
 
 }
