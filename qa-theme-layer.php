@@ -86,7 +86,7 @@ class qa_html_theme_layer extends qa_html_theme_base {
 							),true
 						);				
 				$fields['themes_mobile'] = array(
-						'label' => qa_opt('theme_mobile_switch_text'),
+						'label' => qa_opt('theme_switch_mobile_text'),
 						'tags' => 'NAME="theme_mobile_choice"',
 						'type' => 'select',
 						'options' => qa_admin_theme_options(),
