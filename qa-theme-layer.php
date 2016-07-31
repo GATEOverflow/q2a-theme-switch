@@ -33,12 +33,12 @@ class qa_html_theme_layer extends qa_html_theme_base {
 			$userid = qa_get_logged_in_userid();
 			if (qa_clicked('theme_switch_save')) {
 				qa_db_query_sub(
-						'INSERT INTO ^usermetas (userid,title,value) VALUES (#,$,$) ON DUPLICATE KEY UPDATE value=$',
+						'INSERT INTO ^usermetas (userid,title,content) VALUES (#,$,$) ON DUPLICATE KEY UPDATE value=$',
 						$userid,'custom_theme',qa_post_text('theme_choice'),qa_post_text('theme_choice')
 					       );
 				if (qa_opt('theme_switch_enable_mobile')) {
 					qa_db_query_sub(
-							'INSERT INTO ^usermetas (userid,title,value) VALUES (#,$,$) ON DUPLICATE KEY UPDATE value=$',
+							'INSERT INTO ^usermetas (userid,title,content) VALUES (#,$,$) ON DUPLICATE KEY UPDATE value=$',
 							$userid,'custom_theme_mobile',qa_post_text('theme_mobile_choice'),qa_post_text('theme_mobile_choice')
 						       ); 
 				}
@@ -63,7 +63,7 @@ class qa_html_theme_layer extends qa_html_theme_base {
 
 			$theme_choice = qa_db_read_one_value(
 					qa_db_query_sub(
-						'SELECT value FROM ^usermetas WHERE userid=# AND title=$',
+						'SELECT content FROM ^usermetas WHERE userid=# AND title=$',
 						$userid, 'custom_theme'
 						),true
 					);				
@@ -81,7 +81,7 @@ class qa_html_theme_layer extends qa_html_theme_base {
 			{
 				$theme_mobile_choice = qa_db_read_one_value(
 						qa_db_query_sub(
-							'SELECT value FROM ^usermetas WHERE userid=# AND title=$',
+							'SELECT content FROM ^usermetas WHERE userid=# AND title=$',
 							$userid, 'custom_theme_mobile'
 							),true
 						);				

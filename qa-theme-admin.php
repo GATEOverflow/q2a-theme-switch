@@ -31,22 +31,38 @@ class qa_theme_admin {
 		$ok = null;
 
 		if (qa_clicked('theme_switch_save')) {
-			 foreach($_POST as $i => $v) {
+			foreach($_POST as $i => $v) {
 
-                                qa_opt($i,$v);
-                        }
+				qa_opt($i,$v);
+			}
 
-                        $ok = qa_lang('admin/options_saved');
+			$ok = qa_lang('admin/options_saved');
 
 
 		}
 		else if (qa_clicked('theme_switch_reset')) {
-                        foreach($_POST as $i => $v) {
-                                $def = $this->option_default($i);
-                                if($def !== null) qa_opt($i,$def);
-                        }
-                        $ok = qa_lang('admin/options_reset');
-                }
+			foreach($_POST as $i => $v) {
+				$def = $this->option_default($i);
+				if($def !== null) qa_opt($i,$def);
+			}
+			$ok = qa_lang('admin/options_reset');
+		}
+		else if(qa_clicked('theme_switch_migrate')) {
+			$rows = qa_db_read_all_values(qa_db_query_sub('select user_id from ^usermeta where meta_key like $ and user_id in (select userid from ^users) and user_id not in (select userid from ^usermetas where title like $)', '%theme%', '%theme%'));
+
+			if(count($rows) > 0)
+			{	
+
+				$query = 'INSERT INTO ^usermetas (userid,title,content)  SELECT user_id, meta_key, meta_value from ^usermeta where user_id in (select userid from ^users) and meta_key like \'%theme%\';';
+				qa_db_query_sub($query);
+				qa_opt('theme_switch_migrated', "1");
+				$ok = "Successfully Migrated";
+			}
+			else 
+			{
+				$ok = "Already Migrated";
+			}
+		}
 
 
 
@@ -106,16 +122,30 @@ class qa_theme_admin {
 
 				'fields' => $fields,
 				'buttons' => array(
-                                        array(
-                                                'label' => qa_lang_html('main/save_button'),
-                                                'tags' => 'NAME="theme_switch_save"',
-                                             ),
-                                        array(
-                                                'label' => qa_lang_html('admin/reset_options_button'),
-                                                'tags' => 'NAME="theme_switch_reset"',
-                                             ),
-                                        )
+					array(
+						'label' => qa_lang_html('main/save_button'),
+						'tags' => 'NAME="theme_switch_save"',
+					     ),
+					array(
+						'label' => qa_lang_html('admin/reset_options_button'),
+						'tags' => 'NAME="theme_switch_reset"',
+					     ),
+					array(
+						'label' => 'Migrate from old',
+						'tags' => 'NAME="theme_switch_migrate"',
+					     ),
+					)
 			    );
 	}
+	var $directory;
+	var $urltoroot;
+
+	function load_module($directory, $urltoroot) {
+		$this->directory=$directory;
+		$this->urltoroot=$urltoroot;
+	}
+
+
+
 }
 

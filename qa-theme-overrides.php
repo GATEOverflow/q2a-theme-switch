@@ -9,7 +9,7 @@ function qa_get_site_theme() {
 		if(qa_opt('theme_switch_enable_mobile')) {
 			$mobile_theme = qa_db_read_one_value(
 					qa_db_query_sub(
-						'SELECT value FROM ^usermetas WHERE userid=# AND title=$',
+						'SELECT content FROM ^usermetas WHERE userid=# AND title=$',
 						$userid, 'custom_theme_mobile'
 						),true
 					);
@@ -21,7 +21,7 @@ function qa_get_site_theme() {
 	if(qa_opt('theme_switch_enable')) {
 		$theme = qa_db_read_one_value(
 				qa_db_query_sub(
-					'SELECT value FROM ^usermetas WHERE userid=# AND title=$',
+					'SELECT content FROM ^usermetas WHERE userid=# AND title=$',
 					$userid, 'custom_theme'
 					),true
 				);

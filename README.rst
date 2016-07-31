@@ -4,7 +4,7 @@ Question2Answer Theme Switcher
 -----------
 Description
 -----------
-This is a plugin for **Question2Answer** that provides user theme switching functionality. Is modified from https://raw.github.com/NoahY/q2a-theme-switcher/master/qa-plugin.php to adapt to new Q2A. 
+This is a plugin for **Question2Answer** that provides user theme switching functionality. Includes a migrate code for the Theme Switcher plugin -  https://raw.github.com/NoahY/q2a-theme-switcher/master/qa-plugin.php to adapt to new Q2A. 
 
 --------
 Features
@@ -12,29 +12,11 @@ Features
 - theme selection in user profile for normal/mobile
 - toggle on/off via admin/plugins
 
-------------
-Installation
-------------
-#. Install Question2Answer_
-#. Get the source code for this plugin from github_, either using git_, or downloading directly:
-
-   - To download using git, install git and then type 
-     ``git clone git://github.com/NoahY/q2a-theme-switcher.git theme-switcher``
-     at the command prompt (on Linux, Windows is a bit different)
-   - To download directly, go to the `project page`_ and click **Download**
-
-#. navigate to your site, go to **Admin -> Plugins** on your q2a install and select the '**Enable theme switching**' option, select other options, then '**Save**'.
-#. note that when this plugin is enabled, the admin/general theme selection will have no effect.  Change the default theme via admin/plugins instead.
-
-.. _Question2Answer: http://www.question2answer.org/install.php
-.. _git: http://git-scm.com/
-.. _github:
-.. _project page: https://github.com/NoahY/q2a-theme-switcher
 
 ----------
 Disclaimer
 ----------
-This is **beta** code.  It is probably okay for production environments, but may not work exactly as expected.  Refunds will not be given.  If it breaks, you get to keep both parts.
+This is **beta** code.  It is probably okay for production environments, but may not work exactly as expected.
 
 -------
 Release
