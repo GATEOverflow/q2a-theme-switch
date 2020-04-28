@@ -122,12 +122,14 @@ class qa_theme_admin {
 				'type' => 'textarea',
 				'value' => qa_html(qa_opt('theme_'.$theme.'_i_css')),
 				'tags' => 'NAME="theme_'.$theme.'_i_css"',
+				'rows' => 20,
 			);
 		$fields[] = array(
 				'label' => $theme.' Theme Exclude CSS',
 				'type' => 'textarea',
 				'value' => qa_html(qa_opt('theme_'.$theme.'_e_css')),
 				'tags' => 'NAME="theme_'.$theme.'_e_css"',
+				'rows' => 20,
 			);
 
 		}
