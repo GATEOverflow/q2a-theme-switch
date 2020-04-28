@@ -20,19 +20,17 @@ class qa_html_theme_layer extends qa_html_theme_base {
 		}
 		qa_html_theme_base::doctype();
 	}
-	function getCSS($css)
-	{
-		return '<style type="text/css">'.$css.'</style>';
-	}
 	function head_css()
 	{
+		$pre = '<style type="text/css">';
+		$post = '</style>';
 		$c_theme = qa_get_site_theme();
 		$themes = qa_admin_theme_options();
-		$this ->output($this ->getCSS(qa_opt('theme_switch_'.$c_theme.'_include_css')));
+		$this ->output($pre.qa_opt('theme_switch_'.$c_theme.'_include_css').$post);
 		foreach($themes as $theme)
 		{
 			if($theme != $c_theme){
-				$this ->output($this >getCSS(qa_opt('theme_switch_'.$c_theme.'_exclude_css')));
+				$this ->output($pre.qa_opt('theme_switch_'.$c_theme.'_exclude_css').$post);
 			}
 		}
 		qa_html_theme_base::head_css();
