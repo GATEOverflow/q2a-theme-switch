@@ -26,11 +26,11 @@ class qa_html_theme_layer extends qa_html_theme_base {
 		$post = '</style>';
 		$c_theme = qa_get_site_theme();
 		$themes = qa_admin_theme_options();
-		$this ->output($pre.qa_opt('theme_switch_'.$c_theme.'_include_css').$post);
+		$this ->output($pre.qa_opt('theme_'.$c_theme.'_i_css').$post);
 		foreach($themes as $theme)
 		{
 			if($theme != $c_theme){
-				$this ->output($pre.qa_opt('theme_switch_'.$c_theme.'_exclude_css').$post);
+				$this ->output($pre.qa_opt('theme_'.$c_theme.'_e_css').$post);
 			}
 		}
 		qa_html_theme_base::head_css();

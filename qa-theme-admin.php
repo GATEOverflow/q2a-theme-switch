@@ -120,14 +120,14 @@ class qa_theme_admin {
 		$fields[] = array(
 				'label' => $theme.' Theme Include CSS',
 				'type' => 'textarea',
-				'value' => qa_html(qa_opt('theme_switch_'.$theme.'_include_css')),
-				'tags' => 'NAME="theme_switch_'.$theme.'_include_css"',
+				'value' => qa_html(qa_opt('theme_'.$theme.'_i_css')),
+				'tags' => 'NAME="theme_'.$theme.'_i_css"',
 			);
 		$fields[] = array(
 				'label' => $theme.' Theme Exclude CSS',
 				'type' => 'textarea',
-				'value' => qa_html(qa_opt('theme_switch_'.$theme.'_exclude_css')),
-				'tags' => 'NAME="theme_switch_'.$theme.'_exclude_css"',
+				'value' => qa_html(qa_opt('theme_'.$theme.'_e_css')),
+				'tags' => 'NAME="theme_'.$theme.'_e_css"',
 			);
 
 		}
