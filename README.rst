@@ -11,6 +11,7 @@ Features
 --------
 - theme selection in user profile for normal/mobile
 - toggle on/off via admin/plugins
+- custome CSS to be excluded or included for each theme in use 
 
 
 ----------
