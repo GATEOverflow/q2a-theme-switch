@@ -2,12 +2,13 @@
   "name": "Theme Switcher",
   "uri": "https://github.com/arjunsuresh/q2a-theme-switch",
   "description": "Provides users with an option to choose theme as well as mobile theme",
-  "version": "1.0",
-  "date": "2016-07-30",
+  "version": "1.1",
+  "date": "2020-04-28",
   "author": "Arjun Suresh",
   "author_uri": "http://armi.in/arjun",
   "license": "GPLv2",
   "update_uri": "https://raw.githubusercontent.com/arjunsuresh/q2a-theme-switch/master/metadata.json",
   "min_q2a": "1.5",
-  "min_php": "5.1.6"
+  "min_php": "5.1.6",
+  "load_order": "after_db_init"
 }

@@ -115,7 +115,22 @@ class qa_theme_admin {
 				'value' => qa_html(qa_opt('theme_switch_mobile_text')),
 				'tags' => 'NAME="theme_switch_mobile_text"',
 				);		   
+		foreach ($themes as $theme)
+		{
+		$fields[] = array(
+				'label' => $theme.' Theme Include CSS',
+				'type' => 'textarea',
+				'value' => qa_html(qa_opt('theme_switch_'.$theme.'_include_css')),
+				'tags' => 'NAME="theme_switch_'.$theme.'_include_css"',
+			);
+		$fields[] = array(
+				'label' => $theme.' Theme Exclude CSS',
+				'type' => 'textarea',
+				'value' => qa_html(qa_opt('theme_switch_'.$theme.'_exclude_css')),
+				'tags' => 'NAME="theme_switch_'.$theme.'_exclude_css"',
+			);
 
+		}
 
 		return array(		   
 				'ok' => ($ok && !isset($error)) ? $ok : null,

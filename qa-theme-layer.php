@@ -7,8 +7,6 @@ class qa_html_theme_layer extends qa_html_theme_base {
 
 	function doctype()
 	{
-
-
 		if (qa_opt('theme_switch_enable')) {
 			if($this->template == 'account') { 
 				// add theme switcher
@@ -22,8 +20,24 @@ class qa_html_theme_layer extends qa_html_theme_base {
 		}
 		qa_html_theme_base::doctype();
 	}
+	function getCSS($css)
+	{
+		return '<style type="text/css">'.$css.'</style>';
+	}
+	function head_css()
+	{
+		$c_theme = qa_get_site_theme();
+		$themes = qa_admin_theme_options();
+		$this ->output($this ->getCSS(qa_opt('theme_switch_'.$c_theme.'_include_css')));
+		foreach($themes as $theme)
+		{
+			if($theme != $c_theme){
+				$this ->output($this >getCSS(qa_opt('theme_switch_'.$c_theme.'_exclude_css')));
+			}
+		}
+		qa_html_theme_base::head_css();
 
-
+	}
 
 	function theme_switch_form() {
 		require_once QA_INCLUDE_DIR . 'app/admin.php';
@@ -33,90 +47,91 @@ class qa_html_theme_layer extends qa_html_theme_base {
 			$userid = qa_get_logged_in_userid();
 			if (qa_clicked('theme_switch_save')) {
 				qa_db_query_sub(
-						'INSERT INTO ^usermetas (userid,title,content) VALUES (#,$,$) ON DUPLICATE KEY UPDATE content=$',
+					'INSERT INTO ^usermetas (userid,title,content) VALUES (#,$,$) ON DUPLICATE KEY UPDATE content=$',
 						$userid,'custom_theme',qa_post_text('theme_choice'),qa_post_text('theme_choice')
-					       );
+					);
 				if (qa_opt('theme_switch_enable_mobile')) {
 					qa_db_query_sub(
-							'INSERT INTO ^usermetas (userid,title,content) VALUES (#,$,$) ON DUPLICATE KEY UPDATE content=$',
+						'INSERT INTO ^usermetas (userid,title,content) VALUES (#,$,$) ON DUPLICATE KEY UPDATE content=$',
 							$userid,'custom_theme_mobile',qa_post_text('theme_mobile_choice'),qa_post_text('theme_mobile_choice')
-						       ); 
+						); 
 				}
 				qa_redirect($this->request,array('ok'=>qa_lang_html('admin/options_saved')));
 			}
 			else if (qa_clicked('theme_switch_user_reset')) {
 				qa_db_query_sub(
-						'DELETE FROM ^usermetas WHERE userid=# AND title=$',
-						$userid,'custom_theme'
-					       );
+					'DELETE FROM ^usermetas WHERE userid=# AND title=$',
+					$userid,'custom_theme'
+				);
 				if (qa_opt('theme_switch_enable_mobile')) {
 
 					qa_db_query_sub(
-							'DELETE FROM ^usermetas WHERE userid=# AND title=$',
-							$userid,'custom_theme_mobile'
-						       );
+						'DELETE FROM ^usermetas WHERE userid=# AND title=$',
+						$userid,'custom_theme_mobile'
+					);
 				}
 				qa_redirect($this->request,array('ok'=>qa_lang_html('admin/options_reset')));
 			}
 
 			$ok = qa_get('ok')?qa_get('ok'):null;
-
 			$theme_choice = qa_db_read_one_value(
-					qa_db_query_sub(
-						'SELECT content FROM ^usermetas WHERE userid=# AND title=$',
-						$userid, 'custom_theme'
-						),true
-					);				
+				qa_db_query_sub(
+					'SELECT content FROM ^usermetas WHERE userid=# AND title=$',
+					$userid, 'custom_theme'
+				),true
+			);				
+			if(!$theme_choice) $theme_choice = qa_opt('site_theme');
 
 			$themes = qa_admin_theme_options();
 			$fields = array();
 			$fields['themes'] = array(
-					'label' => qa_opt('theme_switch_text'),
-					'tags' => 'NAME="theme_choice"',
-					'type' => 'select',
-					'options' => qa_admin_theme_options(),
-					'value' => @$themes[$theme_choice],					
-					);
+				'label' => qa_opt('theme_switch_text'),
+				'tags' => 'NAME="theme_choice"',
+				'type' => 'select',
+				'options' => qa_admin_theme_options(),
+				'value' => @$themes[$theme_choice],					
+			);
 			if (qa_opt('theme_switch_enable_mobile')) 
 			{
 				$theme_mobile_choice = qa_db_read_one_value(
-						qa_db_query_sub(
-							'SELECT content FROM ^usermetas WHERE userid=# AND title=$',
-							$userid, 'custom_theme_mobile'
-							),true
-						);				
+					qa_db_query_sub(
+						'SELECT content FROM ^usermetas WHERE userid=# AND title=$',
+						$userid, 'custom_theme_mobile'
+					),true
+				);				
+				if(!$theme_mobile_choice) $theme_choice = qa_opt('site_theme_mobile');
 				$fields['themes_mobile'] = array(
-						'label' => qa_opt('theme_switch_mobile_text'),
-						'tags' => 'NAME="theme_mobile_choice"',
-						'type' => 'select',
-						'options' => qa_admin_theme_options(),
-						'value' => @$themes[$theme_mobile_choice],					
-						);
+					'label' => qa_opt('theme_switch_mobile_text'),
+					'tags' => 'NAME="theme_mobile_choice"',
+					'type' => 'select',
+					'options' => qa_admin_theme_options(),
+					'value' => @$themes[$theme_mobile_choice],					
+				);
 
 			}
 			$form=array(
 
-					'ok' => ($ok && !isset($error)) ? $ok : null,
+				'ok' => ($ok && !isset($error)) ? $ok : null,
 
-					'style' => 'tall',
+				'style' => 'tall',
 
-					'title' => '<a name="theme_text"></a>'.qa_opt('theme_switch_title'),
+				'title' => '<a name="theme_text"></a>'.qa_opt('theme_switch_title'),
 
-					'tags' =>  'action="'.qa_self_html().'#theme_text" method="POST"',
+				'tags' =>  'action="'.qa_self_html().'#theme_text" method="POST"',
 
-					'fields' => $fields,
+				'fields' => $fields,
 
-					'buttons' => array(
-						array(
-							'label' => qa_lang_html('main/save_button'),
-							'tags' => 'NAME="theme_switch_save"',
-						     ),
-						array(
-							'label' => qa_lang_html('admin/reset_options_button'),
-							'tags' => 'NAME="theme_switch_user_reset"',
-						     ),
-						),
-					);
+				'buttons' => array(
+					array(
+						'label' => qa_lang_html('main/save_button'),
+						'tags' => 'NAME="theme_switch_save"',
+					),
+					array(
+						'label' => qa_lang_html('admin/reset_options_button'),
+						'tags' => 'NAME="theme_switch_user_reset"',
+					),
+				),
+			);
 			return $form;
 		}			
 	}
