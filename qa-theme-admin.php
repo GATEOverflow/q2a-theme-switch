@@ -25,7 +25,7 @@ class qa_theme_admin {
 
 	function admin_form(&$qa_content)
 	{					   
-
+		require_once QA_INCLUDE_DIR . 'app/admin.php';
 		// Process form input
 
 		$ok = null;

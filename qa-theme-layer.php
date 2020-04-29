@@ -22,6 +22,9 @@ class qa_html_theme_layer extends qa_html_theme_base {
 	}
 	function head_css()
 	{
+		require_once QA_INCLUDE_DIR . 'app/admin.php';
+		require_once QA_INCLUDE_DIR . 'app/format.php';
+
 		$pre = '<style type="text/css">';
 		$post = '</style>';
 		$c_theme = qa_get_site_theme();
